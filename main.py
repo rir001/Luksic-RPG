@@ -1,5 +1,5 @@
 import pygame
-# import images
+import images
 import tablero
 from pygame.locals import *
 
@@ -50,7 +50,9 @@ class player():
     def prints(self):
         screen.blit(self.surf, (SCREEN_WIDTH/2-step/2,SCREEN_HEIGHT/2-step/2))
 
-        
+
+images.init()
+
 pygame.init()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -62,7 +64,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags, 16)
 x, y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
 xx, yy = 0, 0
 
-step = 64 * 1.5 # images.step
+step = images.step * 1.5
 
 player = player('player')
 
@@ -70,7 +72,8 @@ murallas = []
 sillas = []
 personas = [[], []]
 
-mapa = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map')
+mapa1 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map1')
+mapa2 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map2')
 
 for n in range(len(tablero.tabla)):
     for m in range(len(tablero.tabla[0])):
@@ -81,7 +84,7 @@ for n in range(len(tablero.tabla)):
             sillas.append(coordenadas)
         elif tablero.tabla[n][m][0] == 3:
             personas[0].append(coordenadas)
-            personas[1].append(people(coordenadas, tablero.tabla[n][m][2]))
+            personas[1].append(people(coordenadas, tablero.tabla[n][m][3]))
 
 
 lista = [murallas, sillas, personas]
@@ -132,18 +135,20 @@ while run:
             run = False
         
     
-    frames = 24
+    frames = 30
     for _ in range(1, frames + 1):
         player.update(view)
         screen.fill((0, 0, 0))
         x += (step/frames) * go[0]
         y += (step/frames) * go[1]
-        mapa.update(x, y)
-        mapa.prints()
+        mapa1.update(x, y)
+        mapa2.update(x, y)
+        mapa1.prints()
         player.prints()
         for n in personas[1]:
             n.update(x,y)
             n.prints()
+        mapa2.prints()
         pygame.display.flip()
 
 
