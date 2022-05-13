@@ -3,23 +3,24 @@ import tablero
 import cv2
 import os
 
-step = 64
+step = 64 # tamaño de cada cuadrado
 
-tabla_alto = len(tablero.tabla)
-tabla_ancho = len(tablero.tabla[0])
+tabla_alto = len(tablero.tabla)         # alto del tablero
+tabla_ancho = len(tablero.tabla[0])     # ancho del tablero
 
-def addd(capa, y, x, img1, img2):
+
+def addd(capa, y, x, img1, img2):       # funcion que suma la imagen 2 sobre la imagen 1
     y *= step
     x *= step
     alto = len(img2)
     ancho = len(img2[0])
-    if ((y + alto <= len(img1)) and (x + ancho <= len(img1[0]))):
-        if capa == 0:
+    if ((y + alto <= len(img1)) and (x + ancho <= len(img1[0]))):   # revisa que la imagen 2 no se salga de los margenes de la imagen 1
+        if capa == 0:                                               # si es la primera capa solo reemplaza
             for n in range(alto):
                 for m in range(ancho):
                     img1[y + n][x + m] = img2[n][m]
                     
-        elif capa == 1:
+        elif capa == 1:                                             # si es una capa superior suma los valores teniendo en cuenta el alpha
             for n in range(alto):
                 for m in range(ancho):
                     down = (img1[y + n][x + m]) * (1-(img2[n][m][3]/255))
@@ -27,25 +28,25 @@ def addd(capa, y, x, img1, img2):
                     img1[y + n][x + m] = (down + up)
         
 def init():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')                # limpia el terminal
     print('cargando mapa...')
 
-    map1 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)
-    map2 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)
+    map1 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el primer mapa (piso)
+    map2 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el 2do mapa para dar profundidad
 
     for nn in range(tabla_alto):
         for mm in range(tabla_ancho):
-            addd(0, nn, mm, map1, np.array(cv2.imread('sprites/madera.png', cv2.IMREAD_UNCHANGED)))
+            addd(0, nn, mm, map1, np.array(cv2.imread('sprites/madera.png', cv2.IMREAD_UNCHANGED)))     # crea sa base del primer mapa solo con madera
 
     for nn in range(tabla_alto):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system('cls' if os.name == 'nt' else 'clear')            # limpia el terminal
         print('cargando mapa...')
 
-        print(f'{nn+1}/{tabla_alto} -- 1')
+        print(f'{nn+1}/{tabla_alto} -- 1')                          # imprime el estado del proceso
         print(f'0/{tabla_alto} -- 2')
 
         for mm in range(tabla_ancho):
-            addd(1, nn, mm, map1, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][1]}', cv2.IMREAD_UNCHANGED)))
+            addd(1, nn, mm, map1, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][1]}', cv2.IMREAD_UNCHANGED)))    # con la funcion add suma las imagenes
 
     for nn in range(tabla_alto):
         os.system('cls' if os.name == 'nt' else 'clear')

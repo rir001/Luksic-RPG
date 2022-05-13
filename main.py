@@ -1,5 +1,5 @@
 import pygame
-import images
+# import images
 import tablero
 from pygame.locals import *
 
@@ -51,7 +51,7 @@ class player():
         screen.blit(self.surf, (SCREEN_WIDTH/2-step/2,SCREEN_HEIGHT/2-step/2))
 
 
-images.init()
+# images.init()
 
 pygame.init()
 
@@ -64,7 +64,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags, 16)
 x, y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
 xx, yy = 0, 0
 
-step = images.step * 1.5
+step = 64 * 1.5 # images.step * 1.5
 
 player = player('player')
 
@@ -135,9 +135,9 @@ while run:
             run = False
         
     
-    frames = 30
+    frames = 12
+    player.update(view)
     for _ in range(1, frames + 1):
-        player.update(view)
         screen.fill((0, 0, 0))
         x += (step/frames) * go[0]
         y += (step/frames) * go[1]
