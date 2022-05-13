@@ -8,14 +8,15 @@ class mapa():
         self.x_c = pos[0]
         self.y_c = pos[1]
         self.update(0, 0)
-        self.surf = pygame.image.load(f'{name}.png')
+        self.surf = pygame.image.load(f'{name}.png').convert_alpha()
+        self.surf = pygame.transform.scale(self.surf, (len(tablero.tabla[1]) * step, len(tablero.tabla) * step)).convert_alpha()
 
     def update(self, x, y):
         self.pos_x = self.x_c * step + x - step/2
         self.pos_y = self.y_c * step + y - step/2
     
     def prints(self):
-        return screen.blit(self.surf, (self.pos_x , self.pos_y))
+        screen.blit(self.surf, (self.pos_x , self.pos_y))
 
 class people():
     def __init__(self, pos, name):
@@ -32,21 +33,22 @@ class people():
     def prints(self):
         direct = ('front', 'back', 'left', 'right')
         self.surf = pygame.image.load(f'sprites/{self.name}/{direct[self.see]}.png')
-        return screen.blit(self.surf, (self.pos_x , self.pos_y))
+        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
+        screen.blit(self.surf, (self.pos_x , self.pos_y))
 
 class player():
     def __init__(self, name):
         self.name = name
         self.surf = pygame.image.load('sprites/player/back.png')
-        # self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
+        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
 
     def update(self, see):
         direct = ('front', 'back', 'left', 'right')
         self.surf = pygame.image.load(f'sprites/player/{direct[see]}.png')
-        # self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
+        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
     
     def prints(self):
-        return screen.blit(self.surf, (SCREEN_WIDTH/2-step/2,SCREEN_HEIGHT/2-step/2))
+        screen.blit(self.surf, (SCREEN_WIDTH/2-step/2,SCREEN_HEIGHT/2-step/2))
 
         
 pygame.init()
@@ -60,7 +62,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags, 16)
 x, y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
 xx, yy = 0, 0
 
-step = 64 # images.step
+step = 64 * 1.5 # images.step
 
 player = player('player')
 
@@ -80,6 +82,7 @@ for n in range(len(tablero.tabla)):
         elif tablero.tabla[n][m][0] == 3:
             personas[0].append(coordenadas)
             personas[1].append(people(coordenadas, tablero.tabla[n][m][2]))
+
 
 lista = [murallas, sillas, personas]
         
