@@ -4,14 +4,12 @@ import tablero
 from pygame.locals import *
 from functions import *
 
-
 pygame.init()
 
 SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
 
 flags = FULLSCREEN | DOUBLEBUF
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags, 16)
-
 
 but = [button(2, 1, 'Generar mapa'), button(2, 2, 'Continuar con mapa precargado')]
 
@@ -27,12 +25,11 @@ while run:
             if event.key == K_DOWN:
                 a = 2
             if event.key == K_SPACE:
+                generar_mapa = False
                 if a == 1:
                     generar_mapa = True
-                else:
-                    generar_mapa = False
                 run = False
-        
+
         elif event.type == QUIT:
             run = False
     
@@ -40,26 +37,34 @@ while run:
 
     for n in but:
         n.prints(screen, a)
-
-    pygame.display.update()
+    pygame.display.flip()
 
 if generar_mapa:
     screen.fill((50, 50, 50))
-    
-    pygame.display.update()
-    images.init()
 
+    surf = pygame.image.load('sprites/wait.png')
+    screen.blit(surf, (SCREEN_WIDTH - 350 , SCREEN_HEIGHT - 300))
+
+    text = pygame.font.Font('freesansbold.ttf', 64).render('Esto podria tardar unos minutos', True, (255, 255, 255))
+    textRect = text.get_rect().center = (100, 300)
+    screen.blit(text, textRect)
+
+
+
+    pygame.display.flip()
+    images.init()
+    
 x, y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
 xx, yy = 0, 0
 
 player = player('player')
 
+mapa1 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map1')
+mapa2 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map2')
+
 murallas = []
 sillas = []
 personas = [[], []]
-
-mapa1 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map1')
-mapa2 = mapa([-(len(tablero.tabla[0])-1)/2, -(len(tablero.tabla)-1)/2+3], 'map2')
 
 for n in range(len(tablero.tabla)):
     for m in range(len(tablero.tabla[0])):
