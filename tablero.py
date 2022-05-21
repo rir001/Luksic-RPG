@@ -1,6 +1,7 @@
 a1 = [1, 'blank.png',   'blank.png']                            #limites
 a2 = [1, 'lucesL.png',  'blank.png']                            #Luces L
 a3 = [1, 'lucesR.png',  'blank.png']                            #Luces R
+a4 = [1, 'telon.png',   'blank.png']
 
 b1 = [0, 'blank.png',   'blank.png']                            #madera
 b2 = [0, 'goma.png',    'blank.png']                            #goma
@@ -12,8 +13,10 @@ p0 = [3, 'blank.png', 'blank.png', 'jorge']                  #Jorge Munoz
 
 tabla = [
     [a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1],
-    [a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1],
-    [a1,a1,a1,a1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,a1,a1,a1,a1],
+    [a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a4,a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1],
+    [a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1],
+    [a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1],
+    [a1,a1,a1,a1,b1,b1,b1,b1,b1,b1,a1,a1,a1,a1,a1,a1,a1,b1,b1,b1,b1,b1,b1,a1,a1,a1,a1],
     [a1,a1,a1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,p0,b1,b1,b1,b1,b1,a1,a1,a1],
     [a1,a1,a1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,b1,a1,a1,a1],
     [a1,a1,b1,b1,b1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,a1,b1,b1,b1,a1,a1],

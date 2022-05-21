@@ -1,7 +1,7 @@
 import pygame
 from images import *
 
-step = step * 2
+step = step * 1.5
 
 pygame.init()
 SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.Info().current_w, pygame.display.Info().current_h
