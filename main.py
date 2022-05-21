@@ -1,57 +1,9 @@
 import pygame
-# import images
+import images
 import tablero
 from pygame.locals import *
+from functions import *
 
-class mapa():
-    def __init__(self, pos, name):
-        self.x_c = pos[0]
-        self.y_c = pos[1]
-        self.update(0, 0)
-        self.surf = pygame.image.load(f'{name}.png').convert_alpha()
-        self.surf = pygame.transform.scale(self.surf, (len(tablero.tabla[1]) * step, len(tablero.tabla) * step)).convert_alpha()
-
-    def update(self, x, y):
-        self.pos_x = self.x_c * step + x - step/2
-        self.pos_y = self.y_c * step + y - step/2
-    
-    def prints(self):
-        screen.blit(self.surf, (self.pos_x , self.pos_y))
-
-class people():
-    def __init__(self, pos, name):
-        self.x_c = pos[0]
-        self.y_c = pos[1]
-        self.update(0, 0)
-        self.name = name
-        self.see = 0
-    
-    def update(self, x, y):
-        self.pos_x = self.x_c * step + x - step/2
-        self.pos_y = self.y_c * step + y - step/2
-    
-    def prints(self):
-        direct = ('front', 'back', 'left', 'right')
-        self.surf = pygame.image.load(f'sprites/{self.name}/{direct[self.see]}.png')
-        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
-        screen.blit(self.surf, (self.pos_x , self.pos_y))
-
-class player():
-    def __init__(self, name):
-        self.name = name
-        self.surf = pygame.image.load('sprites/player/back.png')
-        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
-
-    def update(self, see):
-        direct = ('front', 'back', 'left', 'right')
-        self.surf = pygame.image.load(f'sprites/player/{direct[see]}.png')
-        self.surf = pygame.transform.scale(self.surf, (96, 96)).convert_alpha()
-    
-    def prints(self):
-        screen.blit(self.surf, (SCREEN_WIDTH/2-step/2,SCREEN_HEIGHT/2-step/2))
-
-
-# images.init()
 
 pygame.init()
 
@@ -59,12 +11,46 @@ SCREEN_WIDTH, SCREEN_HEIGHT = pygame.display.Info().current_w, pygame.display.In
 
 flags = FULLSCREEN | DOUBLEBUF
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), flags, 16)
-#screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+
+
+but = [button(2, 1, 'Generar mapa'), button(2, 2, 'Continuar con mapa precargado')]
+
+run = True
+a = 1
+while run:
+    for event in pygame.event.get():
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                run = False
+            if event.key == K_UP:
+                a = 1
+            if event.key == K_DOWN:
+                a = 2
+            if event.key == K_SPACE:
+                if a == 1:
+                    generar_mapa = True
+                else:
+                    generar_mapa = False
+                run = False
+        
+        elif event.type == QUIT:
+            run = False
+    
+    screen.fill((50, 50, 50))
+
+    for n in but:
+        n.prints(screen, a)
+
+    pygame.display.update()
+
+if generar_mapa:
+    screen.fill((50, 50, 50))
+    
+    pygame.display.update()
+    images.init()
 
 x, y = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
 xx, yy = 0, 0
-
-step = 64 * 1.5 # images.step * 1.5
 
 player = player('player')
 
@@ -143,12 +129,12 @@ while run:
         y += (step/frames) * go[1]
         mapa1.update(x, y)
         mapa2.update(x, y)
-        mapa1.prints()
-        player.prints()
+        mapa1.prints(screen)
+        player.prints(screen)
         for n in personas[1]:
             n.update(x,y)
-            n.prints()
-        mapa2.prints()
+            n.prints(screen)
+        mapa2.prints(screen)
         pygame.display.flip()
 
 
