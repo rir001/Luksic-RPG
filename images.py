@@ -32,11 +32,10 @@ def init():
     print('cargando mapa...')
 
     map1 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el primer mapa (piso)
-    # map2 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el 2do mapa para dar profundidad
-
+    
     for nn in range(tabla_alto):
         for mm in range(tabla_ancho):
-            if 6 <= nn <= 19:
+            if 6 <= nn:
                 addd(0, nn, mm, map1, np.array(cv2.imread('sprites/goma.png', cv2.IMREAD_UNCHANGED)))
             else: 
                 addd(0, nn, mm, map1, np.array(cv2.imread('sprites/madera.png', cv2.IMREAD_UNCHANGED)))     # crea sa base del primer mapa solo con madera
