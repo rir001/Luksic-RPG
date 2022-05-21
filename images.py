@@ -32,11 +32,14 @@ def init():
     print('cargando mapa...')
 
     map1 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el primer mapa (piso)
-    map2 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el 2do mapa para dar profundidad
+    # map2 = np.zeros((tabla_alto * step, tabla_ancho * step, 4), np.uint8)       # crea el 2do mapa para dar profundidad
 
     for nn in range(tabla_alto):
         for mm in range(tabla_ancho):
-            addd(0, nn, mm, map1, np.array(cv2.imread('sprites/madera.png', cv2.IMREAD_UNCHANGED)))     # crea sa base del primer mapa solo con madera
+            if 6 <= nn <= 19:
+                addd(0, nn, mm, map1, np.array(cv2.imread('sprites/goma.png', cv2.IMREAD_UNCHANGED)))
+            else: 
+                addd(0, nn, mm, map1, np.array(cv2.imread('sprites/madera.png', cv2.IMREAD_UNCHANGED)))     # crea sa base del primer mapa solo con madera
 
     for nn in range(tabla_alto):
         os.system('cls' if os.name == 'nt' else 'clear')            # limpia el terminal
@@ -48,18 +51,18 @@ def init():
         for mm in range(tabla_ancho):
             addd(1, nn, mm, map1, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][1]}', cv2.IMREAD_UNCHANGED)))    # con la funcion add suma las imagenes
 
-    for nn in range(tabla_alto):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        print('cargando mapa...')
+    # for nn in range(tabla_alto):
+    #     os.system('cls' if os.name == 'nt' else 'clear')
+    #     print('cargando mapa...')
 
-        print(f'{tabla_alto}/{tabla_alto} -- 1')
-        print(f'{nn+1}/{tabla_alto} -- 2')
+    #     print(f'{tabla_alto}/{tabla_alto} -- 1')
+    #     print(f'{nn+1}/{tabla_alto} -- 2')
 
-        for mm in range(tabla_ancho):
-            addd(0, nn, mm, map2, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][2]}', cv2.IMREAD_UNCHANGED)))
+    #     for mm in range(tabla_ancho):
+    #         addd(0, nn, mm, map2, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][2]}', cv2.IMREAD_UNCHANGED)))
 
     cv2.imwrite('map1.png', map1)
-    cv2.imwrite('map2.png', map2)
+    # cv2.imwrite('map2.png', map2)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
