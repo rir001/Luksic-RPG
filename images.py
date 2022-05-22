@@ -49,7 +49,6 @@ def init():
         print(f'0/{tabla_alto} -- 2')
 
         for mm in range(tabla_ancho):
-            print(tablero.tabla[nn][mm][1])
             addd(1, nn, mm, map1, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][1]}', cv2.IMREAD_UNCHANGED)))    # con la funcion add suma las imagenes
 
     for nn in range(tabla_alto):
@@ -60,7 +59,7 @@ def init():
         print(f'{nn+1}/{tabla_alto} -- 2')
 
         for mm in range(tabla_ancho):
-            addd(0, nn, mm, map2, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][2]}', cv2.IMREAD_UNCHANGED)))
+            addd(1, nn, mm, map2, np.array(cv2.imread(f'sprites/{tablero.tabla[nn][mm][2]}', cv2.IMREAD_UNCHANGED)))
 
     cv2.imwrite('map1.png', map1)
     cv2.imwrite('map2.png', map2)
